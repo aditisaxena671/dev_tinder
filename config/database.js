@@ -11,3 +11,5 @@ module.exports=connectDB;
 // }).catch(err=>{
 //     console.error("database cannot be coonected "+err)
 // })
+
+// i'm great
