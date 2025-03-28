@@ -12,6 +12,8 @@ const userSchema= new mongoose.Schema({
         type:String,
         required:true,
         unique:true,
+        trim:true,// trims extra spaces in a email id
+        lowercase:true,//converts email id to lowercase
     },
     password:{
         type:String,
@@ -20,12 +22,20 @@ const userSchema= new mongoose.Schema({
 
     },
     age:{
-        type:Number
+        type:Number,
+        min:18,
+        default:18,
     },
     gender:{
         type:String
+    },
+    photoUrs:{
+        type:String
+    },
+    skills:{
+        type:[String]
     }
-});
+},{timestamps:true});
 
 const userModel= mongoose.model("User",userSchema);
 module.exports= userModel;

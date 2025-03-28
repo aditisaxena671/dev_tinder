@@ -84,11 +84,21 @@ app.delete("/deleteUserByEmail", async (req,res)=>{
 app.patch("/updateUserByEmail", async (req,res)=>{
   const userId=req.body.userId
   const data= req.body;
+  const ALLOWED_UPDATE=["userId","gender","age","skills","firstName"];
+  const isUpdateAllowed=Object.keys(data).every((k)=>
+    ALLOWED_UPDATE.includes(k)
+  );
+  if(!isUpdateAllowed){
+    return res.status(400).send("invalid update");
+  }
   try{
-    await User.findByIdAndUpdate({_id:userId},data);
+    await User.findByIdAndUpdate({_id:userId},data,{
+      runValidators: true,
+    });
+    
     res.status(200).send("user updated"); 
   }catch(err){
-    res.status(400).send("something went wrong");
+    res.status(400).send("something went wrong ERROR: "+err);
 
   }
 });
